@@ -1,6 +1,7 @@
 ﻿
 using Grocery.Core.Data.Helpers;
 using Microsoft.Data.Sqlite;
+using System.Diagnostics;
 
 namespace Grocery.Core.Data
 {
@@ -12,11 +13,13 @@ namespace Grocery.Core.Data
         public DatabaseConnection()
         {
             databaseName = ConnectionHelper.ConnectionStringValue("GroceryAppDb");
-            //string workingDirectory = Environment.CurrentDirectory;
+
             string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string dbpath = "Data Source="+ Path.Combine(projectDirectory + databaseName);
-            Connection = new SqliteConnection(dbpath);
+            string fullPath = Path.Combine(projectDirectory, databaseName);
+
+            Connection = new SqliteConnection($"Data Source={fullPath}");
         }
+
 
         protected void OpenConnection()
         {
